@@ -491,7 +491,7 @@
                     <label>Rating</label>
                     <div class="rating" id="ratingInput">
                         <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
+                        <span class "star" data-value="2">★</span>
                         <span class="star" data-value="3">★</span>
                         <span class="star" data-value="4">★</span>
                         <span class="star" data-value="5">★</span>
@@ -621,7 +621,7 @@
         // Save to Google Sheets (via script)
         function saveProject(index) {
             const project = projects[index];
-            const url = 'https://script.google.com/macros/s/AKfycbzbqfeXPwsQQfDCYqe1rcnOm7k-cBTYErpD3KdWsLymyUCR18nrITTELxGDGQ00dmEE5g/exec';
+            const url = 'https://script.google.com/macros/s/AKfycbzN_mC79ujWvVn5ehB6-t5AmiSHWEOCwGypxZkE1fUkcoMaYcoR5zqya04v5NhcJwE6BQ/exec';
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -650,7 +650,7 @@
                 'New Badge': formData.get('newBadge') === 'on'
             };
 
-            const url = 'https://script.google.com/macros/s/AKfycbzbqfeXPwsQQfDCYqe1rcnOm7k-cBTYErpD3KdWsLymyUCR18nrITTELxGDGQ00dmEE5g/exec';
+            const url = 'https://script.google.com/macros/s/AKfycbzN_mC79ujWvVn5ehB6-t5AmiSHWEOCwGypxZkE1fUkcoMaYcoR5zqya04v5NhcJwE6BQ/exec';
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -682,7 +682,7 @@
         }
 
         function deleteProject(index) {
-            const url = 'https://script.google.com/macros/s/AKfycbzbqfeXPwsQQfDCYqe1rcnOm7k-cBTYErpD3KdWsLymyUCR18nrITTELxGDGQ00dmEE5g/exec';
+            const url = 'https://script.google.com/macros/s/AKfycbzN_mC79ujWvVn5ehB6-t5AmiSHWEOCwGypxZkE1fUkcoMaYcoR5zqya04v5NhcJwE6BQ/exec';
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
