@@ -5,16 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airdrop Tracker</title>
     <style>
-        @font-face {
-            font-family: 'Sorponch Bold';
-            src: url('path-to-sorponch-bold.woff2') format('woff2');
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Sorponch Bold', sans-serif;
+            font-family: sans-serif; /* Font fallback if Sorponch Bold not available */
         }
 
         body {
@@ -491,7 +486,7 @@
                     <label>Rating</label>
                     <div class="rating" id="ratingInput">
                         <span class="star" data-value="1">★</span>
-                        <span class "star" data-value="2">★</span>
+                        <span class="star" data-value="2">★</span>
                         <span class="star" data-value="3">★</span>
                         <span class="star" data-value="4">★</span>
                         <span class="star" data-value="5">★</span>
@@ -511,7 +506,7 @@
         © 2025 Airdrop Tracker | Built with ❤️ for Crypto Enthusiasts
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.6.1/dist/tabletop.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tabletop.js/1.6.1/tabletop.min.js"></script>
     <script>
         let projects = [];
 
@@ -621,10 +616,14 @@
         // Save to Google Sheets (via script)
         function saveProject(index) {
             const project = projects[index];
-            const url = 'https://script.google.com/macros/s/AKfycbzN_mC79ujWvVn5ehB6-t5AmiSHWEOCwGypxZkE1fUkcoMaYcoR5zqya04v5NhcJwE6BQ/exec';
+            const url = 'https://script.google.com/macros/s/AKfycbzUfrbgssLRYf0FSbBZvivqnM93nIvvOGW1zm8tM7jE4rDZwHpSTb4OX_gaHN-VX6lOtQ/exec';
             fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify({
                     action: 'update',
                     index: index,
@@ -650,18 +649,27 @@
                 'New Badge': formData.get('newBadge') === 'on'
             };
 
-            const url = 'https://script.google.com/macros/s/AKfycbzN_mC79ujWvVn5ehB6-t5AmiSHWEOCwGypxZkE1fUkcoMaYcoR5zqya04v5NhcJwE6BQ/exec';
+            const url = 'https://script.google.com/macros/s/AKfycbzUfrbgssLRYf0FSbBZvivqnM93nIvvOGW1zm8tM7jE4rDZwHpSTb4OX_gaHN-VX6lOtQ/exec';
             fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify({
                     action: 'add',
                     project: project
                 })
-            }).then(() => {
-                hideModal();
-                loadProjects(); // Refresh data
-            }).catch(error => console.error('Error:', error));
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                      hideModal();
+                      loadProjects(); // Refresh data
+                  } else {
+                      console.error('Error from Apps Script:', data.message);
+                  }
+              }).catch(error => console.error('Error:', error));
         });
 
         function editProject(index) {
@@ -682,15 +690,26 @@
         }
 
         function deleteProject(index) {
-            const url = 'https://script.google.com/macros/s/AKfycbzN_mC79ujWvVn5ehB6-t5AmiSHWEOCwGypxZkE1fUkcoMaYcoR5zqya04v5NhcJwE6BQ/exec';
+            const url = 'https://script.google.com/macros/s/AKfycbzUfrbgssLRYf0FSbBZvivqnM93nIvvOGW1zm8tM7jE4rDZwHpSTb4OX_gaHN-VX6lOtQ/exec';
             fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
                 body: JSON.stringify({
                     action: 'delete',
                     index: index
                 })
-            }).then(() => loadProjects()).catch(error => console.error('Error:', error));
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                      loadProjects();
+                  } else {
+                      console.error('Error from Apps Script:', data.message);
+                  }
+              }).catch(error => console.error('Error:', error));
         }
 
         const stars = document.querySelectorAll('#ratingInput .star');
